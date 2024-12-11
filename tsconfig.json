@@ -18,7 +18,9 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": ["node_modules", "build", "coverage", "webpack.*.js", "*.config.js", "*.test.ts*"],
   "ts-node": {
