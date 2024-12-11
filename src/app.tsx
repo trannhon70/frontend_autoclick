@@ -4,6 +4,7 @@ import Login from './pages/login';
 import { AuthContext } from './context/AuthContext';
 import Error from './pages/error';
 import LayoutComponent from './layout/layoutComponent';
+import CreateAutoClick from './pages/autoClick/createAutoClick';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
@@ -23,6 +24,7 @@ export default class App extends React.Component {
         <Route index path='/login' element={<Login />} />
         <Route element={<PrivateRoutes />}>
           <Route path='/'  element={<LayoutComponent />} >
+            <Route index path='/auto-click-create' element={<CreateAutoClick />} />
           </Route>
         </Route>
         <Route path="*" element={<Error />} />

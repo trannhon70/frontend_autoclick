@@ -3,7 +3,7 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, Layout } from 'antd';
+import { Button, Dropdown, Layout, Space } from 'antd';
 import { FC } from "react";
 import { FaHouseChimneyUser } from "react-icons/fa6";
 import { Link } from "react-router";
@@ -22,7 +22,7 @@ const items: MenuProps['items'] = [
         key: '0',
     },
     {
-        label:  <Link to={'/cai-dat'}>Cài đặt</Link>,
+        label: <Link to={'/cai-dat'}>Cài đặt</Link>,
         key: '1',
     },
     {
@@ -46,9 +46,14 @@ const HeaderComponent: FC<IProps> = (props) => {
                 height: "50px"
             }}
         />
-        <div className="pr-4" >
+        <div className="pr-4  h-[50px]" >
             <Dropdown menu={{ items }} trigger={['click']}>
-                <FaHouseChimneyUser className='cursor-pointer'  size={25} />
+                <a onClick={e => e.preventDefault()}>
+                    <Space className="mt-1" >
+                        <FaHouseChimneyUser className='cursor-pointer' size={25} />
+                    </Space>
+                </a>
+
             </Dropdown>
         </div>
     </Header>

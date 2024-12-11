@@ -52,8 +52,8 @@ const LayoutComponent: FC = () => {
             <HeaderComponent setCollapsed={setCollapsed} colorBgContainer={colorBgContainer} collapsed={collapsed} />
             <Content
                 style={{
-                    margin: '24px 16px',
-                    padding: 24,
+                    margin: '10px',
+                    padding: 15,
                     minHeight: 280,
                     background: colorBgContainer,
                     borderRadius: borderRadiusLG,
