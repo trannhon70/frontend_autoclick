@@ -1,6 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
+
+const env = dotenv.config().parsed; // Load biến từ tệp .env
+
+// Chuyển đổi các biến từ .env thành dạng phù hợp với DefinePlugin
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   entry: './src/index.tsx',
@@ -11,6 +21,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: 'src/icons' }],
     }),
+    new webpack.DefinePlugin(envKeys), 
   ],
   module: {
     rules: [
