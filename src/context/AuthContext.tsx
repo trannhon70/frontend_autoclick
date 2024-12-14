@@ -46,9 +46,9 @@ const AuthProvider = ({ children }: Props) => {
 
     const logout = async() => {
         // await userAPI.logout()
-        // localStorage.clear();
-        // navigate('/login');
-        // window.location.reload();
+        localStorage.clear();
+        navigate('/login');
+        window.location.reload();
 
     }
 
