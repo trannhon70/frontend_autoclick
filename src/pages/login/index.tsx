@@ -1,6 +1,43 @@
-import { FC } from "react";
+import { FC, useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { ILogin } from "../../interface/users";
+import { useNavigate } from "react-router";
 
 const Login: FC = () => {
+  const { login } = useContext(AuthContext)
+  const [form, setForm] = useState<ILogin>({
+      email: '',
+      password: ''
+  })
+  const { authenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      if (authenticated) {
+          navigate('/');
+      }
+  }, [authenticated, navigate]);
+
+
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setForm({
+          ...form,
+          email: e.target.value,
+      });
+  };
+
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setForm({
+          ...form,
+          password: e.target.value,
+      });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      login(form)
+  };
     return <div className="flex font-poppins items-center justify-center">
   <div className="h-screen w-screen flex justify-center items-center dark:bg-gray-900">
     <div className="grid gap-8">
@@ -12,18 +49,18 @@ const Login: FC = () => {
           <form action="#" method="post" className="space-y-4">
             <div>
               <label htmlFor="email" className="mb-2  dark:text-gray-400 text-lg">Email</label>
-              <input id="email" className="border p-3 dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full" type="email" placeholder="Email" required />
+              <input  onChange={handleChangeEmail} id="email" className="border p-3 dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full" type="email" placeholder="Email" required />
             </div>
             <div>
               <label htmlFor="password" className="mb-2 dark:text-gray-400 text-lg">Password</label>
-              <input id="password" className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full" type="password" placeholder="Password" required />
+              <input onChange={handleChangePassword} id="password" className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full" type="password" placeholder="Password" required />
             </div>
             <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
               <span className="bg-left-bottom bg-gradient-to-r text-sm from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
                 Forget your password?
               </span>
             </a>
-            <button className="bg-gradient-to-r dark:text-gray-300 from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out" type="submit">
+            <button onClick={handleSubmit} className="bg-gradient-to-r dark:text-gray-300 from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out" type="submit">
               LOG IN
             </button>
           </form>

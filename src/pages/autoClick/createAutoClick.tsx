@@ -1,8 +1,18 @@
 import { FC, Fragment } from "react";
+import { Breadcrumb } from 'antd';
 
 const CreateAutoClick: FC = () => {
     return <Fragment>
-        vcreateAutoClick
+        <Breadcrumb
+            items={[
+                {
+                    title: 'auto click',
+                },
+                {
+                    title: <a href="">Thêm mới</a>,
+                },
+            ]}
+        />
     </Fragment>
 }
 

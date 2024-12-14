@@ -30,7 +30,7 @@ const AuthProvider = ({ children }: Props) => {
     const login = async (form : any) => {
         try {
             const result = await userAPI.login(form)
-
+            
             if (result?.data?.statusCode === 1) {
                 setAuthenticated(true);
                 toast.success(`${result?.data?.message}`)

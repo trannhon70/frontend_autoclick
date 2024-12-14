@@ -8,9 +8,8 @@ import CreateAutoClick from './pages/autoClick/createAutoClick';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
-  console.log(authenticated, 'authenticated');
   
-  if (authenticated) {
+  if (!authenticated) {
     return <Navigate to="/login" replace />;
   }
 
