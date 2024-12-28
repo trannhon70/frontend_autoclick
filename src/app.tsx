@@ -23,7 +23,8 @@ export default class App extends React.Component {
         <Route index path='/login' element={<Login />} />
         <Route element={<PrivateRoutes />}>
           <Route path='/'  element={<LayoutComponent />} >
-            <Route index path='/auto-click-create' element={<CreateAutoClick />} />
+            <Route path='/user/them-moi' element={<CreateAutoClick />} />
+            <Route path='/user/danh-sach' element={<></>} />
           </Route>
         </Route>
         <Route path="*" element={<Error />} />
