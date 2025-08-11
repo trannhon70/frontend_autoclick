@@ -7,14 +7,14 @@ export const userAPI = {
 };
 
 function login(data : any) {
-    return instance.post("/users/login", data);
+    return instance.post("/user/login", data);
 }
 
 function create(data : any) {
-    return instance.post("/users/create", data);
+    return instance.post("/user/create", data);
 }
 
 function getByIdUser() {
-    return instance.get("/users/get-by-id");
+    return instance.get("/user/get-by-id");
 }
 

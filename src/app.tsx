@@ -1,7 +1,6 @@
 
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { useChatSocket } from './hooks/useChatSocket';
 import ErrorComponent from './components/error';
 import LayoutComponent from './components/layout';
 import Login from './pages/login';
@@ -10,12 +9,7 @@ import { routesConfig } from './routers/routesConfig';
 import { CheckRole } from './utils';
 import Otp from './pages/otp';
 function App() {
-  const { } = useChatSocket({
-    onUserOnline(message) {
-      console.log(message);
 
-    },
-  });
 
   return (
     <Routes>
