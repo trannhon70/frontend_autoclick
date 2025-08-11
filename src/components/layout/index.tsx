@@ -30,14 +30,13 @@ function getItem(
     } as MenuItem;
 }
 const sub0 = [
-    '/dashboard'
+    '/quan-ly-proxy', '/quan-ly-proxy/them-moi'
 ]
 
 
 
 const LayoutComponent:FC = () =>{
      const { user ,role } = useGetByIdUser();
-     console.log(user);
 
      const [collapsed, setCollapsed] = useState(false);
     const {
@@ -57,9 +56,9 @@ const LayoutComponent:FC = () =>{
     const items: MenuItem[] = [
         getItem(<Link to={'/'}>Trang chủ</Link>, '/', <IoHomeOutline size={20} />),
         ...(role?.id === CheckRole.ADMIN ?
-            [getItem('Quản lý người dùng', 'sub0', <FaUsers size={20} />, [
-                getItem(<Link to={'/admin/quan-ly-nguoi-dung'}>Danh sách</Link>, '/admin/quan-ly-nguoi-dung', <FaList size={20} />),
-                getItem(<Link to={'/admin/quan-ly-nguoi-dung/them-moi'}>Thêm mới</Link>, '/admin/quan-ly-nguoi-dung/them-moi', <VscDiffAdded size={20} />),
+            [getItem('Quản lý Proxy', 'sub0', <FaUsers size={20} />, [
+                getItem(<Link to={'/quan-ly-proxy'}>Danh sách</Link>, '/quan-ly-proxy', <FaList size={20} />),
+                getItem(<Link to={'/quan-ly-proxy/them-moi'}>Thêm mới</Link>, '/quan-ly-proxy/them-moi', <VscDiffAdded size={20} />),
             ])] : []),
         
 
