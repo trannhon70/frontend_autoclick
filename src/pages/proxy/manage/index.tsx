@@ -50,7 +50,7 @@ const ProxyManage:FC = () =>{
             title: "IP",
             dataIndex: 'host',
             key: 'host',
-            render(_value, _record, index) {
+            render(_value, _record, _index) {
                 return <Fragment>{_value }</Fragment>
             },
         },
@@ -59,7 +59,7 @@ const ProxyManage:FC = () =>{
             title: "Port",
             dataIndex: 'port',
             key: 'port',
-            render(_value, _record, index) {
+            render(_value, _record, _index) {
                 return <Fragment>{_value }</Fragment>
             },
         },
@@ -68,7 +68,7 @@ const ProxyManage:FC = () =>{
             title: "user proxy",
             dataIndex: 'user_proxy',
             key: 'user_proxy',
-            render(_value, _record, index) {
+            render(_value, _record, _index) {
                 return <Fragment>{_value }</Fragment>
             },
         },
@@ -77,7 +77,7 @@ const ProxyManage:FC = () =>{
             title: "pass proxy",
             dataIndex: 'pass_proxy',
             key: 'pass_proxy',
-            render(_value, _record, index) {
+            render(_value, _record, _index) {
                 return <Fragment>{_value }</Fragment>
             },
         },
@@ -86,7 +86,7 @@ const ProxyManage:FC = () =>{
             title: "Người tạo",
             dataIndex: 'user',
             key: 'user',
-            render(_value, _record, index) {
+            render(_value, _record, _index) {
                 return <Fragment>{_value.fullName }</Fragment>
             },
         },

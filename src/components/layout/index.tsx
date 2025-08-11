@@ -8,10 +8,11 @@ import { FaList } from "react-icons/fa6";
 import { IoHomeOutline } from "react-icons/io5";
 import { VscDiffAdded } from "react-icons/vsc";
 import { Link, Outlet, useLocation } from 'react-router-dom';
-
+import { PiTrafficSignalFill } from "react-icons/pi";
 import { FaUsers } from "react-icons/fa";
 import { CheckRole } from "../../utils";
 import HeaderComponent from "../header";
+import { SiTraefikproxy } from "react-icons/si";
 
 const { Sider, Content } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -56,11 +57,11 @@ const LayoutComponent:FC = () =>{
     const items: MenuItem[] = [
         getItem(<Link to={'/'}>Trang chủ</Link>, '/', <IoHomeOutline size={20} />),
         ...(role?.id === CheckRole.ADMIN ?
-            [getItem('Quản lý Proxy', 'sub0', <FaUsers size={20} />, [
+            [getItem('Quản lý Proxy', 'sub0', <SiTraefikproxy size={20} />, [
                 getItem(<Link to={'/quan-ly-proxy'}>Danh sách</Link>, '/quan-ly-proxy', <FaList size={20} />),
                 getItem(<Link to={'/quan-ly-proxy/them-moi'}>Thêm mới</Link>, '/quan-ly-proxy/them-moi', <VscDiffAdded size={20} />),
             ])] : []),
-        
+         getItem(<Link to={'/traffic-website'}>Traffic website</Link>, '/traffic-website', <PiTrafficSignalFill size={20} />),
 
     ];
      

@@ -1,7 +1,7 @@
 import type { FormProps } from 'antd';
-import { Breadcrumb, Button, Form, Input, Popover } from "antd";
+import { Breadcrumb, Button, Form, Input } from "antd";
 import type { FC } from "react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { proxyAPI } from '../../../apis/proxy.api';

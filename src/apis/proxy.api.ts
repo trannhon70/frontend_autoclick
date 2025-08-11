@@ -5,7 +5,9 @@ export const proxyAPI = {
     getPaging,
     getById,
     update,
-    deletes
+    deletes,
+    play,
+    stop
 };
 
 
@@ -15,6 +17,15 @@ async function create(data : any) {
     return respone.data
 }
 
+async function play(data : any) {
+    const respone = await instance.post("/proxy/play", data);
+    return respone.data
+}
+
+async function stop() {
+    const respone = await instance.post("/proxy/stop");
+    return respone.data
+}
 async function getPaging(query: any) {
     const response = await instance.get(`/proxy/get-paging?pageIndex=${query.pageIndex}&pageSize=${query.pageSize}&search=${query.search}`);
     return response.data
