@@ -1,15 +1,20 @@
 import instance from "../helper/api.helper";
-import { ILogin } from "../interface/users";
 
 export const userAPI = {
     login,
+    create,
     getByIdUser
 };
 
-function login(data : ILogin) {
-    return instance.post("/user/login", data);
+function login(data : any) {
+    return instance.post("/users/login", data);
+}
+
+function create(data : any) {
+    return instance.post("/users/create", data);
 }
 
 function getByIdUser() {
-    return instance.get("/user/get-by-id-user");
+    return instance.get("/users/get-by-id");
 }
+

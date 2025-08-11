@@ -1,9 +1,8 @@
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
-// import { setInvalidToken } from "../features/usersSlice";
-// import { store } from "../redux/store";
-
+import axios from "axios";
+import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+const apiUrl = import.meta.env.VITE_API_URL_API;
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_URL_API,
+    baseURL: apiUrl,
     headers: { 'Content-Type': 'application/json' },
 });
 
@@ -26,15 +25,15 @@ instance.interceptors.request.use(
 // Interceptor cho response
 instance.interceptors.response.use(
     (response: AxiosResponse) => {
+        // console.log(response, 'response');
         return response;
     },
     async (error) => {
-        console.log(error);
-        
-        // const dispatch = store.dispatch; 
+        console.log(error.response.data.message, 'error');
         // Kiểm tra nếu lỗi là 401 (Unauthorized) và token hết hạn
-        if (error.response.data && error.response.data.error === 'Invalid token or user not found' || error.response.data.error === 'Unauthorized') {
-            // dispatch(setInvalidToken(true));
+        if (error.response.data && error.response.data.message === 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.' || error.response.data.message === "Tài khoản đã được đăng nhập nơi khác!" || error.response.data.message === "Phiên đăng nhập đã hết hạn hoặc không tồn tại." ) {
+            localStorage.clear();
+            window.location.reload();
             return Promise.reject(error); 
         }
 

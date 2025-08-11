@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useState } from 'react';
+import type { ReactNode } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { userAPI } from '../apis/user.api';
-
 type Props = {
     children?: ReactNode;
 }
@@ -30,29 +30,27 @@ const AuthProvider = ({ children }: Props) => {
     const login = async (form : any) => {
         try {
             const result = await userAPI.login(form)
-            
             if (result?.data?.statusCode === 1) {
                 setAuthenticated(true);
                 toast.success(`${result?.data?.message}`)
-                localStorage.setItem('token', result?.data?.token )
+                localStorage.setItem('token', result?.data?.data?.token );
+                localStorage.setItem('startTimeToken', result?.data?.data?.startTime );
+                localStorage.setItem('endTimeToken', result?.data?.data?.endTime );
                 navigate('/');
             }
 
         } catch (error: any) {
             console.log(error);
             toast.error(`${error?.response?.data?.message}`)
+         
         }
     }
 
     const logout = async() => {
         // await userAPI.logout()
         localStorage.clear();
-        navigate('/login');
         window.location.reload();
-
     }
-
-   
 
     return (
         <AuthContext.Provider value={{ authenticated, setAuthenticated, login, logout }}>

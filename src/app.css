@@ -1,2 +1,41 @@
-/* Modified from the create-react-app TypeScript template */
-/* See: https://github.com/facebook/create-react-app/blob/main/packages/cra-template-typescript/template/src/App.css */
+@import "tailwindcss";
+
+.otp-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.otp-title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+}
+
+.otp-input {
+  width: 45px !important;
+  height: 45px !important;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  border: 2px solid #d0d0d0 !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  transition: all 0.2s ease-in-out !important;
+  margin: 0 5px !important;
+}
+
+.otp-input:focus {
+  border-color: #4cafef !important;
+  box-shadow: 0 0 6px rgba(76, 175, 239, 0.4) !important;
+}
+
+.otp-input:hover {
+  border-color: #999 !important;
+}
+
+.otp-input:disabled {
+  background-color: #f3f3f3 !important;
+  cursor: not-allowed !important;
+}
