@@ -18,34 +18,32 @@ const Traffic: FC = () => {
     const variant = Form.useWatch('variant', form);
     const [loading, setLoading] = useState<boolean>(false)
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        
+
         const body = {
-           urls: Array.from({ length: Number(values.quantity) }, () => values.urls).flat(),
+            urls: Array.from({ length: Number(values.quantity) }, () => values.urls).flat(),
             time: Number(values.time) * 1000,
             page: values.page,
             chats: values.chats
         }
 
-         proxyAPI.play(body).then((res:any) =>{
+        proxyAPI.play(body).then((_res: any) => {
             setLoading(true)
-         }).catch((err:any) =>{
-             setLoading(false)
-         })
-        
-       
+        }).catch((_err: any) => {
+            // setLoading(false)
+        })
+
     };
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
-        
-            toast.warning('Link và chat không được bỏ trống!')
+        toast.warning('Link và chat không được bỏ trống!')
     };
 
     const onClickPrev = () => {
-        proxyAPI.stop().then((res:any) =>{
-             setLoading(false)
-         }).catch((err:any) =>{
-             setLoading(false)
-         })
+        proxyAPI.stop().then((_res: any) => {
+            setLoading(false)
+        }).catch((_err: any) => {
+            setLoading(false)
+        })
     }
     return <Fragment>
         <div className="flex items-center justify-center font-semibold text-2xl uppercase text-green-600" >
@@ -150,7 +148,7 @@ const Traffic: FC = () => {
                                     getValueFromEvent={(e) => Number(e.target.value)}
                                 >
                                     <Space.Compact style={{ width: '100%' }} >
-                                        <Input type='number' size="large" style={{ width: '80%' }} defaultValue=""  />
+                                        <Input type='number' size="large" style={{ width: '80%' }} defaultValue="" />
                                         <Input size="large" style={{ width: '20%' }} defaultValue="trang" />
                                     </Space.Compact>
                                 </Form.Item>
@@ -166,7 +164,7 @@ const Traffic: FC = () => {
                                     getValueFromEvent={(e) => Number(e.target.value)}
                                 >
                                     <Space.Compact style={{ width: '100%' }} >
-                                        <Input type='number' size="large" style={{ width: '80%' }} defaultValue=""  />
+                                        <Input type='number' size="large" style={{ width: '80%' }} defaultValue="" />
                                         <Input size="large" style={{ width: '20%' }} defaultValue="lần" />
                                     </Space.Compact>
                                 </Form.Item>
