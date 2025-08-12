@@ -10,18 +10,20 @@ type FieldType = {
     urls?: any[];
     time?: number;
     page?: number;
-
+    chats?: any[];
+    quantity?: number;
 };
 const Traffic: FC = () => {
     const [form] = Form.useForm();
     const variant = Form.useWatch('variant', form);
     const [loading, setLoading] = useState<boolean>(false)
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-
+        
         const body = {
-            urls: values.urls,
+           urls: Array.from({ length: Number(values.quantity) }, () => values.urls).flat(),
             time: Number(values.time) * 1000,
-            page: values.page
+            page: values.page,
+            chats: values.chats
         }
 
          proxyAPI.play(body).then((res:any) =>{
@@ -35,7 +37,7 @@ const Traffic: FC = () => {
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
         
-            toast.warning('Phải có ít nhất 1 link để chạy')
+            toast.warning('Link và chat không được bỏ trống!')
     };
 
     const onClickPrev = () => {
@@ -139,7 +141,7 @@ const Traffic: FC = () => {
                             </Col>
                             <Col span={24}>
                                 <Form.Item<FieldType>
-                                    label="số lượng page"
+                                    label="số lượng page chạy cùng lúc"
                                     name="page"
                                     rules={[
                                         { required: true, message: 'số lượng page không được bỏ trống!' },
@@ -152,6 +154,72 @@ const Traffic: FC = () => {
                                         <Input size="large" style={{ width: '20%' }} defaultValue="trang" />
                                     </Space.Compact>
                                 </Form.Item>
+                            </Col>
+                            <Col span={24}>
+                                <Form.Item<FieldType>
+                                    label="Số lần chạy"
+                                    name="quantity"
+                                    rules={[
+                                        { required: true, message: 'Số lần chạy không được bỏ trống!' },
+                                        { type: 'number', min: 1, message: 'Số lần chạy từ 1 trở lên!' }
+                                    ]}
+                                    getValueFromEvent={(e) => Number(e.target.value)}
+                                >
+                                    <Space.Compact style={{ width: '100%' }} >
+                                        <Input type='number' size="large" style={{ width: '80%' }} defaultValue=""  />
+                                        <Input size="large" style={{ width: '20%' }} defaultValue="lần" />
+                                    </Space.Compact>
+                                </Form.Item>
+                            </Col>
+                            <Col span={24}>
+                                <Form.List
+                                    name="chats"
+                                    rules={[
+                                        {
+                                            validator: async (_, urls) => {
+                                                if (!urls || urls.length < 1) {
+                                                    return Promise.reject(new Error('Phải nhập ít nhất 1 chat!'));
+                                                }
+                                            },
+                                        },
+                                    ]}
+                                >
+                                    {(fields, { add, remove }) => (
+                                        <>
+                                            {fields.map(({ key, name, ...restField }) => (
+                                                <Space
+                                                    key={key}
+                                                    style={{ display: 'flex', marginBottom: 8, width: '100%' }}
+                                                    align="baseline"
+                                                >
+                                                    <Form.Item
+                                                        {...restField}
+                                                        name={name}
+                                                        rules={[{ required: true, message: 'chat không được bỏ trống!' }]}
+                                                        style={{ flex: 1, width: '100%' }}
+                                                    >
+                                                        <Input style={{ width: '500px' }} placeholder="Nhập chat" size="large" />
+                                                    </Form.Item>
+                                                    <MinusCircleOutlined
+                                                        onClick={() => remove(name)}
+                                                        style={{ color: 'red' }}
+                                                    />
+                                                </Space>
+                                            ))}
+
+                                            <Form.Item>
+                                                <Button
+                                                    type="dashed"
+                                                    onClick={() => add()}
+                                                    block
+                                                    icon={<PlusOutlined />}
+                                                >
+                                                    Thêm chat
+                                                </Button>
+                                            </Form.Item>
+                                        </>
+                                    )}
+                                </Form.List>
                             </Col>
                         </Row>
 
