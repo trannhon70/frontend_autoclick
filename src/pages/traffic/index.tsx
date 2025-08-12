@@ -116,7 +116,7 @@ const Traffic: FC = () => {
                                     )}
                                 </Form.List>
                             </Col>
-                             <Col span={24}>
+                            <Col span={24}>
                                 <Form.List
                                     name="chats"
                                     rules={[
@@ -219,24 +219,21 @@ const Traffic: FC = () => {
                                     </Space.Compact>
                                 </Form.Item>
                             </Col>
-                                    <Col span={24}>
-                        <Form.Item className='flex items-center justify-end' label={null}>
-                            <Button loading={loading} icon={<FaPlay />} color="primary" variant="solid" htmlType="submit">
-                                Chạy
-                            </Button>
-                            <Button icon={<FaRegStopCircle color='red' />} onClick={onClickPrev} className="ml-2.5" color="orange" variant="solid" type="default">
-                                Dừng
-                            </Button>
-                        </Form.Item>
-                    </Col>
+                            <Col span={24}>
+                                <Form.Item className='flex items-center justify-end' label={null}>
+                                    <Button loading={loading} icon={<FaPlay />} color="primary" variant="solid" htmlType="submit">
+                                        Chạy
+                                    </Button>
+                                    <Button icon={<FaRegStopCircle color='red' />} onClick={onClickPrev} className="ml-2.5" color="orange" variant="solid" type="default">
+                                        Dừng
+                                    </Button>
+                                </Form.Item>
+                            </Col>
                         </Row>
 
                     </Col>
                 </Row>
-                <Row gutter={16}>
 
-                    
-                </Row>
             </Form>
 
         </div>
