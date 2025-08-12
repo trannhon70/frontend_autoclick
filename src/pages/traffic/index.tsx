@@ -116,6 +116,56 @@ const Traffic: FC = () => {
                                     )}
                                 </Form.List>
                             </Col>
+                             <Col span={24}>
+                                <Form.List
+                                    name="chats"
+                                    rules={[
+                                        {
+                                            validator: async (_, urls) => {
+                                                if (!urls || urls.length < 1) {
+                                                    return Promise.reject(new Error('Phải nhập ít nhất 1 chat!'));
+                                                }
+                                            },
+                                        },
+                                    ]}
+                                >
+                                    {(fields, { add, remove }) => (
+                                        <>
+                                            {fields.map(({ key, name, ...restField }) => (
+                                                <Space
+                                                    key={key}
+                                                    style={{ display: 'flex', marginBottom: 8, width: '100%' }}
+                                                    align="baseline"
+                                                >
+                                                    <Form.Item
+                                                        {...restField}
+                                                        name={name}
+                                                        rules={[{ required: true, message: 'chat không được bỏ trống!' }]}
+                                                        style={{ flex: 1, width: '100%' }}
+                                                    >
+                                                        <Input style={{ width: '500px' }} placeholder="Nhập chat" size="large" />
+                                                    </Form.Item>
+                                                    <MinusCircleOutlined
+                                                        onClick={() => remove(name)}
+                                                        style={{ color: 'red' }}
+                                                    />
+                                                </Space>
+                                            ))}
+
+                                            <Form.Item>
+                                                <Button
+                                                    type="dashed"
+                                                    onClick={() => add()}
+                                                    block
+                                                    icon={<PlusOutlined />}
+                                                >
+                                                    Thêm chat
+                                                </Button>
+                                            </Form.Item>
+                                        </>
+                                    )}
+                                </Form.List>
+                            </Col>
                         </Row>
 
                     </Col>
@@ -169,63 +219,7 @@ const Traffic: FC = () => {
                                     </Space.Compact>
                                 </Form.Item>
                             </Col>
-                            <Col span={24}>
-                                <Form.List
-                                    name="chats"
-                                    rules={[
-                                        {
-                                            validator: async (_, urls) => {
-                                                if (!urls || urls.length < 1) {
-                                                    return Promise.reject(new Error('Phải nhập ít nhất 1 chat!'));
-                                                }
-                                            },
-                                        },
-                                    ]}
-                                >
-                                    {(fields, { add, remove }) => (
-                                        <>
-                                            {fields.map(({ key, name, ...restField }) => (
-                                                <Space
-                                                    key={key}
-                                                    style={{ display: 'flex', marginBottom: 8, width: '100%' }}
-                                                    align="baseline"
-                                                >
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={name}
-                                                        rules={[{ required: true, message: 'chat không được bỏ trống!' }]}
-                                                        style={{ flex: 1, width: '100%' }}
-                                                    >
-                                                        <Input style={{ width: '500px' }} placeholder="Nhập chat" size="large" />
-                                                    </Form.Item>
-                                                    <MinusCircleOutlined
-                                                        onClick={() => remove(name)}
-                                                        style={{ color: 'red' }}
-                                                    />
-                                                </Space>
-                                            ))}
-
-                                            <Form.Item>
-                                                <Button
-                                                    type="dashed"
-                                                    onClick={() => add()}
-                                                    block
-                                                    icon={<PlusOutlined />}
-                                                >
-                                                    Thêm chat
-                                                </Button>
-                                            </Form.Item>
-                                        </>
-                                    )}
-                                </Form.List>
-                            </Col>
-                        </Row>
-
-                    </Col>
-                </Row>
-                <Row gutter={16}>
-
-                    <Col span={24}>
+                                    <Col span={24}>
                         <Form.Item className='flex items-center justify-end' label={null}>
                             <Button loading={loading} icon={<FaPlay />} color="primary" variant="solid" htmlType="submit">
                                 Chạy
@@ -235,6 +229,13 @@ const Traffic: FC = () => {
                             </Button>
                         </Form.Item>
                     </Col>
+                        </Row>
+
+                    </Col>
+                </Row>
+                <Row gutter={16}>
+
+                    
                 </Row>
             </Form>
 
