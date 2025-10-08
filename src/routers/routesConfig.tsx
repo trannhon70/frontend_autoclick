@@ -5,6 +5,7 @@ const Home = React.lazy(() => import('../pages/home'));
 const ProxyCreate = React.lazy(() => import('../pages/proxy/create'));
 const ProxyManage = React.lazy(() => import('../pages/proxy/manage'));
 const Traffic = React.lazy(() => import('../pages/traffic'));
+const ComponentClickAds = React.lazy(() => import('../pages/click_ads'));
 
 
 export const routesConfig = [
@@ -22,7 +23,7 @@ export const routesConfig = [
     roles: [CheckRole.ADMIN, CheckRole.USER],
   },
 
-    {
+  {
     path: '/quan-ly-proxy/cap-nhat/:id',
     element: <ProxyCreate />,
     private: true,
@@ -36,9 +37,16 @@ export const routesConfig = [
     roles: [CheckRole.ADMIN, CheckRole.USER],
   },
 
-   {
+  {
     path: '/traffic-website',
     element: <Traffic />,
+    private: true,
+    roles: [CheckRole.ADMIN, CheckRole.USER],
+  },
+
+  {
+    path: '/click-ads',
+    element: <ComponentClickAds />,
     private: true,
     roles: [CheckRole.ADMIN, CheckRole.USER],
   },

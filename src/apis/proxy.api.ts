@@ -7,17 +7,18 @@ export const proxyAPI = {
     update,
     deletes,
     play,
-    stop
+    stop,
+    createClickAds
 };
 
 
 
-async function create(data : any) {
+async function create(data: any) {
     const respone = await instance.post("/proxy/create", data);
     return respone.data
 }
 
-async function play(data : any) {
+async function play(data: any) {
     const respone = await instance.post("/proxy/play", data);
     return respone.data
 }
@@ -36,13 +37,18 @@ async function getById(id: any) {
     return response.data
 }
 
-async function update(id:number, body: any) {
-    const response = await instance.put(`/proxy/update/${id}`,body);
+async function update(id: number, body: any) {
+    const response = await instance.put(`/proxy/update/${id}`, body);
     return response.data
 }
 
 
 async function deletes(id: any) {
     const response = await instance.delete(`/proxy/delete/${id}`);
+    return response.data
+}
+
+async function createClickAds(body: any) {
+    const response = await instance.post(`/proxy/create-click-ads`, body);
     return response.data
 }

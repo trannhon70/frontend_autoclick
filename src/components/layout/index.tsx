@@ -1,4 +1,4 @@
-import { Fragment, type FC } from "react";
+import { type FC } from "react";
 import useGetByIdUser from "../../hooks/useGetByIdUser";
 
 import type { MenuProps } from 'antd';
@@ -6,14 +6,13 @@ import { Layout, Menu, theme } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
 import { FaList } from "react-icons/fa6";
 import { IoHomeOutline } from "react-icons/io5";
+import { PiTrafficSignalFill } from "react-icons/pi";
+import { SiTraefikproxy } from "react-icons/si";
+import { TbHandClick } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { PiTrafficSignalFill } from "react-icons/pi";
-import { FaUsers } from "react-icons/fa";
 import { CheckRole } from "../../utils";
 import HeaderComponent from "../header";
-import { SiTraefikproxy } from "react-icons/si";
-
 const { Sider, Content } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -36,10 +35,10 @@ const sub0 = [
 
 
 
-const LayoutComponent:FC = () =>{
-     const { user ,role } = useGetByIdUser();
+const LayoutComponent: FC = () => {
+    const { user, role } = useGetByIdUser();
 
-     const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -50,7 +49,7 @@ const LayoutComponent:FC = () =>{
         if (sub0.includes(location.pathname)) {
             setOpenKeys(['sub0']);
         }
-       
+
 
     }, [location.pathname, sub0,])
 
@@ -61,42 +60,43 @@ const LayoutComponent:FC = () =>{
                 getItem(<Link to={'/quan-ly-proxy'}>Danh sách</Link>, '/quan-ly-proxy', <FaList size={20} />),
                 getItem(<Link to={'/quan-ly-proxy/them-moi'}>Thêm mới</Link>, '/quan-ly-proxy/them-moi', <VscDiffAdded size={20} />),
             ])] : []),
-         getItem(<Link to={'/traffic-website'}>Traffic website</Link>, '/traffic-website', <PiTrafficSignalFill size={20} />),
+        getItem(<Link to={'/traffic-website'}>Traffic website</Link>, '/traffic-website', <PiTrafficSignalFill size={20} />),
+        getItem(<Link to={'/click-ads'}>Click Ads</Link>, '/click-ads', <TbHandClick size={20} />),
 
     ];
-     
-    return <Layout style={{ height: '100vh' }} >
-            <Sider style={{ overflow: 'auto' }} width={250} trigger={null} collapsible collapsed={collapsed}  >
-                <div className="p-2">
-                    {/* <img className='w-[100%] ' src={logo} alt="..." /> */}
-                </div>
-                <Menu
-                    className='mt-3'
-                    theme="dark"
-                    mode="inline"
-                    selectedKeys={[location.pathname]}
-                    openKeys={openKeys} // Use openKeys instead of defaultOpenKeys
-                    onOpenChange={setOpenKeys} // Update openKeys on change
-                    items={items}
-                />
-            </Sider>
-            <Layout>
-                <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} user={user} />
-                <Content
-                    style={{
-                        margin: '6px ',
-                        padding: '5px  10px',
-                        minHeight: 280,
-                        background: '#f7f9fa',
-                        borderRadius: borderRadiusLG,
-                        overflow: 'auto',
 
-                    }}
-                >
-                    <Outlet />
-                </Content>
-            </Layout>
+    return <Layout style={{ height: '100vh' }} >
+        <Sider style={{ overflow: 'auto' }} width={250} trigger={null} collapsible collapsed={collapsed}  >
+            <div className="p-2">
+                {/* <img className='w-[100%] ' src={logo} alt="..." /> */}
+            </div>
+            <Menu
+                className='mt-3'
+                theme="dark"
+                mode="inline"
+                selectedKeys={[location.pathname]}
+                openKeys={openKeys} // Use openKeys instead of defaultOpenKeys
+                onOpenChange={setOpenKeys} // Update openKeys on change
+                items={items}
+            />
+        </Sider>
+        <Layout>
+            <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} user={user} />
+            <Content
+                style={{
+                    margin: '6px ',
+                    padding: '5px  10px',
+                    minHeight: 280,
+                    background: '#f7f9fa',
+                    borderRadius: borderRadiusLG,
+                    overflow: 'auto',
+
+                }}
+            >
+                <Outlet />
+            </Content>
         </Layout>
+    </Layout>
 }
 
 export default LayoutComponent
