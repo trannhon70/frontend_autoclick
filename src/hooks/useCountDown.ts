@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 
 const formatTime = (seconds: number) => {
-    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const d = Math.floor(seconds / (24 * 3600));
+    const h = String(Math.floor((seconds % (24 * 3600)) / 3600)).padStart(2, '0');
     const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
     const s = String(seconds % 60).padStart(2, '0');
+
+    if (d > 0) {
+        return `${d} ngày ${h}:${m}:${s}`;
+    }
     return `${h}:${m}:${s}`;
 };
 
@@ -40,7 +45,7 @@ export const useCountDown = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const logout = async() => {
+    const logout = async () => {
         // Xoá token
         localStorage.clear();
         window.location.reload();
