@@ -55,12 +55,12 @@ const LayoutComponent: FC = () => {
 
     const items: MenuItem[] = [
         getItem(<Link to={'/'}>Trang chủ</Link>, '/', <IoHomeOutline size={20} />),
-        ...(role?.id === CheckRole.ADMIN ?
-            [getItem('Quản lý Proxy', 'sub0', <SiTraefikproxy size={20} />, [
-                getItem(<Link to={'/quan-ly-proxy'}>Danh sách</Link>, '/quan-ly-proxy', <FaList size={20} />),
-                getItem(<Link to={'/quan-ly-proxy/them-moi'}>Thêm mới</Link>, '/quan-ly-proxy/them-moi', <VscDiffAdded size={20} />),
-            ])] : []),
-        getItem(<Link to={'/traffic-website'}>Traffic website</Link>, '/traffic-website', <PiTrafficSignalFill size={20} />),
+        // ...(role?.id === CheckRole.ADMIN ?
+        //     [getItem('Quản lý Proxy', 'sub0', <SiTraefikproxy size={20} />, [
+        //         getItem(<Link to={'/quan-ly-proxy'}>Danh sách</Link>, '/quan-ly-proxy', <FaList size={20} />),
+        //         getItem(<Link to={'/quan-ly-proxy/them-moi'}>Thêm mới</Link>, '/quan-ly-proxy/them-moi', <VscDiffAdded size={20} />),
+        //     ])] : []),
+        // getItem(<Link to={'/traffic-website'}>Traffic website</Link>, '/traffic-website', <PiTrafficSignalFill size={20} />),
         getItem(<Link to={'/click-ads'}>Click Ads</Link>, '/click-ads', <TbHandClick size={20} />),
 
     ];
