@@ -3,7 +3,7 @@ import type { FormProps } from 'antd';
 import { Button, Col, Form, Input, Row, Space } from "antd";
 import type { FC } from "react";
 import { useState } from "react";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaRegStopCircle } from "react-icons/fa";
 import { commandApi } from '../../apis/command.api';
 type FieldType = {
     keyword?: string;
@@ -30,7 +30,9 @@ const ComponentClickAds: FC = () => {
         console.log('Failed:', errorInfo);
     };
 
-
+    const onClickStop = async () => {
+        await commandApi.stop()
+    }
     return <>
         <div className="flex items-center justify-center font-semibold text-2xl uppercase text-green-600" >
             Thực hiện click ads
@@ -150,9 +152,9 @@ const ComponentClickAds: FC = () => {
                                     <Button loading={loading} icon={<FaPlay />} color="primary" variant="solid" htmlType="submit">
                                         Chạy
                                     </Button>
-                                    {/* <Button icon={<FaRegStopCircle color='red' />} onClick={onClickPrev} className="ml-2.5" color="orange" variant="solid" type="default">
+                                    <Button icon={<FaRegStopCircle color='red' />} onClick={onClickStop} className="ml-2.5" color="orange" variant="solid" type="default">
                                         Dừng
-                                    </Button> */}
+                                    </Button>
                                 </Form.Item>
                             </Col>
                         </Row>
