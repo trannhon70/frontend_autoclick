@@ -58,12 +58,14 @@ const ComponentClickAds: FC = () => {
     });
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setLoading(true)
-        commandApi.run(values).then((_res: any) => {
-            setLoading(false)
-        }).catch((_err: any) => {
-            console.log(_err);
-            setLoading(false)
-        })
+        setTimeout(() => {
+            commandApi.run(values).then((_res: any) => {
+                setLoading(false)
+            }).catch((_err: any) => {
+                console.log(_err);
+                setLoading(false)
+            })
+        }, 2000)
 
 
     };
