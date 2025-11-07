@@ -4,10 +4,14 @@ import { getSocket } from './chatSocketSingleton';
 
 type UseChatSocketProps = {
   onUserOnline?: (message: any) => void;
-  
+  onStart?: (message: any) => void;
+  onRobot?: (message: any) => void;
+  onSuccess?: (message: any) => void;
+  onError?: (message: any) => void;
+  onStop?: (message: any) => void;
 };
 
-export const useChatSocket = ({ onUserOnline }: UseChatSocketProps) => {
+export const useChatSocket = ({ onStart, onRobot, onSuccess, onError, onStop }: UseChatSocketProps) => {
   const socketRef = useRef<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -25,21 +29,45 @@ export const useChatSocket = ({ onUserOnline }: UseChatSocketProps) => {
       setIsConnected(false);
     };
 
-    const handleUserOnline = (message: any) => {
-      // console.log('📩 New message:', message);
-      onUserOnline?.(message);
+
+    const handleOnStart = (message: any) => {
+      onStart?.(message);
+    };
+
+    const handleOnRobot = (message: any) => {
+      onRobot?.(message);
+    };
+
+    const handleOnSuccess = (message: any) => {
+      onSuccess?.(message);
+    };
+
+    const handleOnError = (message: any) => {
+      onError?.(message);
+    };
+
+    const handleOnStop = (message: any) => {
+      onStop?.(message);
     };
 
     socket.on('connect', handleConnect);
     socket.on('disconnect', handleDisconnect);
-    socket.on('user_online', handleUserOnline);
- 
+    socket.on('start', handleOnStart);
+    socket.on('robot', handleOnRobot);
+    socket.on('success', handleOnSuccess);
+    socket.on('error', handleOnError);
+    socket.on('stop', handleOnStop);
+
     return () => {
       socket.off('connect', handleConnect);
       socket.off('disconnect', handleDisconnect);
-       socket.off('user_online', handleUserOnline);
+      socket.off('start', handleOnStart);
+      socket.off('robot', handleOnRobot);
+      socket.off('success', handleOnSuccess);
+      socket.off('error', handleOnError);
+      socket.off('stop', handleOnStop);
     };
-  }, [onUserOnline]);
+  }, [onStart, onRobot, onSuccess, onError, onStop]);
 
 
 

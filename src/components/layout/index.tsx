@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useEffect, type FC } from "react";
 import useGetByIdUser from "../../hooks/useGetByIdUser";
 
 import type { MenuProps } from 'antd';
@@ -52,6 +52,48 @@ const LayoutComponent: FC = () => {
 
 
     }, [location.pathname, sub0,])
+
+    useEffect(() => {
+        // 🚫 Chặn chuột phải
+        const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+        document.addEventListener("contextmenu", handleContextMenu);
+
+        // 🚫 Chặn phím tắt DevTools, View Source, PrintScreen, Reload
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (
+                e.key === "F12" ||
+                e.key === "F5" || // ⛔ chặn reload
+                (e.ctrlKey && e.key.toLowerCase() === "r") || // Ctrl + R (Windows/Linux)
+                (e.metaKey && e.key.toLowerCase() === "r") || // ⌘ + R (Mac)
+                (e.ctrlKey && e.shiftKey && ["i", "c", "j"].includes(e.key.toLowerCase())) ||
+                (e.ctrlKey && e.key.toLowerCase() === "u") ||
+                e.key === "PrintScreen"
+            ) {
+                e.preventDefault();
+                alert("🚫 Hành động này bị vô hiệu hóa!");
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+
+        // 🚫 Chặn copy
+        const handleCopy = (e: ClipboardEvent) => e.preventDefault();
+        document.addEventListener("copy", handleCopy);
+
+        // 🚫 Chặn reload bằng nút reload (trên thanh trình duyệt)
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            e.preventDefault();
+            e.returnValue = ""; // Chrome yêu cầu gán chuỗi rỗng để hiển thị popup xác nhận
+        };
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        // Cleanup khi component unmount
+        return () => {
+            document.removeEventListener("contextmenu", handleContextMenu);
+            document.removeEventListener("keydown", handleKeyDown);
+            document.removeEventListener("copy", handleCopy);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
 
     const items: MenuItem[] = [
         getItem(<Link to={'/'}>Trang chủ</Link>, '/', <IoHomeOutline size={20} />),

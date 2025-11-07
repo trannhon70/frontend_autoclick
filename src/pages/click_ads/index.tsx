@@ -2,9 +2,10 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import type { FormProps } from 'antd';
 import { Button, Col, Form, Input, Row, Space } from "antd";
 import type { FC } from "react";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPlay, FaRegStopCircle } from "react-icons/fa";
 import { commandApi } from '../../apis/command.api';
+import { useChatSocket } from "../../hooks/useChatSocket";
 type FieldType = {
     keyword?: string;
     domain?: string;
@@ -14,7 +15,47 @@ type FieldType = {
 const ComponentClickAds: FC = () => {
     const [form] = Form.useForm();
     const variant = Form.useWatch('variant', form);
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false);
+    const [data, setData] = useState<any[]>([]);
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const [err, setErr] = useState<number>(0);
+    const [robot, setRobot] = useState<number>(0);
+    const [success, setSuccess] = useState<number>(0);
+
+    const onStart = useCallback((msg: any) => {
+        setData((prev: any[]) => [
+            ...prev,
+            { start: msg } // thêm phần tử mới vào mảng
+        ]);
+    }, []);
+
+    const onStop = useCallback((msg: any) => {
+        setData((prev: any[]) => [
+            ...prev,
+            { stop: msg } // thêm phần tử mới vào mảng
+        ]);
+    }, []);
+
+    const onError = useCallback((msg: any) => {
+        setErr((prev) => Number(prev) + Number(msg));
+    }, []);
+
+    const onRobot = useCallback((msg: any) => {
+        setRobot((prev) => Number(prev) + Number(msg));
+    }, []);
+
+    const onSuccess = useCallback((msg: any) => {
+        setSuccess((prev) => Number(prev) + Number(msg));
+    }, []);
+
+
+    const { } = useChatSocket({
+        onStart,
+        onStop,
+        onError,
+        onRobot,
+        onSuccess
+    });
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setLoading(true)
         commandApi.run(values).then((_res: any) => {
@@ -33,11 +74,19 @@ const ComponentClickAds: FC = () => {
     const onClickStop = async () => {
         await commandApi.stop()
     }
-    return <>
-        <div className="flex items-center justify-center font-semibold text-2xl uppercase text-green-600" >
+
+
+    // Khi data thay đổi => scroll xuống cuối
+    useEffect(() => {
+        if (bottomRef.current) {
+            bottomRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [data]);
+    return <div className="">
+        <div className="flex items-center justify-center font-semibold text-2xl uppercase text-green-600 h-[5vh]">
             Thực hiện click ads
         </div>
-        <div className="flex items-center justify-center w-full mt-4 " >
+        <div className=" w-full overflow-auto h-[50vh] overflow-x-hidden" >
 
             <Form
                 form={form}
@@ -45,7 +94,7 @@ const ComponentClickAds: FC = () => {
                 wrapperCol={{ span: 24 }}
                 variant={variant || 'filled'}
                 layout="vertical"
-                style={{ width: '1200px' }}
+                style={{ minWidth: '800px' }}
                 initialValues={{ variant: 'filled' }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
@@ -165,7 +214,29 @@ const ComponentClickAds: FC = () => {
             </Form>
 
         </div>
-    </>
+        <div className="flex items-center justify-evenly bg-gray-200 " >
+            <div className="flex items-center bg-emerald-600 p-2 text-white text-base gap-1  " >
+                Số lần click thành công: <strong>{success}</strong>
+            </div>
+            <div className="flex items-center bg-amber-500 p-2 text-white text-base gap-1 " >
+                Số lần bị robot: <strong>{robot}</strong>
+            </div>
+            <div className="flex items-center bg-red-500 p-2 text-white text-base gap-1 " >
+                Số lần click không thành công hoặc không có domain: <strong> {err}</strong>
+            </div>
+        </div>
+        <div className="h-[32vh] bg-black w-full overflow-auto text-white p-2" >
+            {
+                data.length > 0 && data.map((item: any, index: number) => {
+                    return <div key={index} className="px-2" >
+                        {item.start && <div className="text-green-600">{item.start}</div>}
+                        {item.stop && <div className="text-red-600">{item.stop}</div>}
+                    </div>
+                })
+            }
+            <div ref={bottomRef} />
+        </div>
+    </div>
 }
 
 export default ComponentClickAds
