@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPlay, FaRegStopCircle } from "react-icons/fa";
 import { commandApi } from '../../apis/command.api';
 import { useChatSocket } from "../../hooks/useChatSocket";
+import { historyApi } from "../../apis/history.api";
 type FieldType = {
     keyword?: string;
     domain?: string;
@@ -84,6 +85,17 @@ const ComponentClickAds: FC = () => {
             bottomRef.current.scrollIntoView({ behavior: "smooth" });
         }
     }, [data]);
+
+    const getall = async () => {
+        const result = await historyApi.getAll();
+        setSuccess(result.data.success);
+        setErr(result.data.error);
+        setRobot(result.data.robot);
+    }
+
+    useEffect(() => {
+        getall();
+    }, [])
     return <div className="">
         <div className="flex items-center justify-center font-semibold text-2xl uppercase text-green-600 h-[5vh]">
             Thực hiện click ads
@@ -127,7 +139,7 @@ const ComponentClickAds: FC = () => {
                                         {(fields, { add, remove }) => (
                                             <div className="w-[100%]">
                                                 {fields.map(({ key, name, ...restField }) => (
-                                                    <div className="flex items-start gap-2.5 justify-between" >
+                                                    <div key={key} className="flex items-start gap-2.5 justify-between" >
                                                         <Form.Item
                                                             style={{ width: '100%' }}
                                                             className="w-[100%]"
